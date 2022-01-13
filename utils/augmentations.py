@@ -26,7 +26,7 @@ class Albumentations:
                 # A.MedianBlur(p=0.01),
                 # A.ToGray(p=0.01),
                 # A.CLAHE(p=0.01),
-                A.LongestMaxSize(max_size=1024),
+                A.LongestMaxSize(max_size=1920),
                 A.RandomCrop(1280, 1280),
                 A.RandomBrightnessContrast(p=0.0),
                 A.RandomGamma(p=0.0),
