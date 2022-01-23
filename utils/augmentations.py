@@ -27,9 +27,9 @@ class Albumentations:
                 # A.ToGray(p=0.01),
                 # A.CLAHE(p=0.01),
                 A.LongestMaxSize(max_size=3648),
-                A.RandomSizedBBoxSafeCrop_Modified(width=1824, height=1824, erosion_rate=0.2)
-                # A.RandomBrightnessContrast(p=0.0),
-                # A.RandomGamma(p=0.0),
+                A.RandomSizedBBoxSafeCrop_Modified(width=1824, height=1824, erosion_rate=0.2),
+                A.RandomBrightnessContrast(p=0.0),
+                A.RandomGamma(p=0.0),
                 A.ImageCompression(quality_lower=75, p=0.0)],
                 bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
