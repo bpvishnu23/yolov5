@@ -26,7 +26,7 @@ from PIL import ExifTags, Image, ImageOps
 from torch.utils.data import DataLoader, Dataset, dataloader, distributed
 from tqdm import tqdm
 
-from utils.augmentations import Albumentations, augment_hsv, copy_paste, letterbox, mixup, random_perspective
+from utils.augmentations import Albumentations, augment_hsv, copy_paste, letterbox, letterbox_dummy, mixup, random_perspective
 from utils.general import (LOGGER, NUM_THREADS, check_dataset, check_requirements, check_yaml, clean_str,
                            segments2boxes, xyn2xy, xywh2xyxy, xywhn2xyxy, xyxy2xywhn)
 from utils.torch_utils import torch_distributed_zero_first
@@ -572,7 +572,10 @@ class LoadImagesAndLabels(Dataset):
             # Letterbox
             shape = self.batch_shapes[self.batch[index]] if self.rect else self.img_size  # final letterboxed shape
             # print(shape)
-            img, ratio, pad = letterbox(img, shape, auto=False, scaleup=self.augment)
+            if self.augment:
+                img, ratio, pad = letterbox(img, shape, auto=False, scaleup=self.augment)
+            else:
+                img, ratio, pad = letterbox_dummy(img, shape, auto=False, scaleup=self.augment)
             shapes = (h0, w0), ((h / h0, w / w0), pad)  # for COCO mAP rescaling
             # print('2 ', shapes)
             labels = self.labels[index].copy()
