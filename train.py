@@ -281,7 +281,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
                 f"Logging results to {colorstr('bold', save_dir)}\n"
                 f'Starting training for {epochs} epochs...')
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
-        model.train()
+        # model.train()
 
         # Update image weights (optional, single-GPU only)
         if opt.image_weights:
