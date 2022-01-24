@@ -22,16 +22,28 @@ class Albumentations:
             # check_version(A.__version__, '1.0.3', hard=True)  # version requirement
 
             self.transform = A.Compose([
-                # A.Blur(p=0.01),
-                # A.MedianBlur(p=0.01),
-                # A.ToGray(p=0.01),
-                # A.CLAHE(p=0.01),
                 A.LongestMaxSize(max_size=3584),
+                A.RandomScale(scale_limit=0.5, p=0.75),
+                A.PadIfNeeded(min_width=2016, min_height=2016, border_mode=0),
                 A.RandomSizedBBoxSafeCrop_Modified(width=2016, height=2016, erosion_rate=0.2),
-                # A.RandomCrop(width=2016, height=2016),
-                A.RandomBrightnessContrast(p=0.0),
-                A.RandomGamma(p=0.0),
-                A.ImageCompression(quality_lower=75, p=0.0)],
+                A.HorizontalFlip(p=0.5),
+                A.VerticalFlip(p=0.5),
+                A.RandomRotate90(p=0.5),
+                A.OneOf([
+                A.HueSaturationValue(hue_shift_limit=0.2, sat_shift_limit= 0.2, 
+                                    val_shift_limit=0.2, p=0.9),
+                A.RandomBrightnessContrast(brightness_limit=0.2, 
+                                            contrast_limit=0.2, p=0.9),
+                ],p=0.9),
+                A.ToGray(p=0.01),
+                A.GaussNoise(p=0.2),
+                A.OneOf([
+                    A.MotionBlur(p=1),
+                    A.MedianBlur(blur_limit=3, p=1),
+                    A.Blur(blur_limit=3, p=1),
+                ], p=0.1),
+                A.JpegCompression(quality_lower=85, quality_upper=95, p=0.1),
+                ],
                 bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
             LOGGER.info(colorstr('albumentations: ') + ', '.join(f'{x}' for x in self.transform.transforms if x.p))
