@@ -24,7 +24,7 @@ class Albumentations:
             self.transform = A.Compose([
                 A.LongestMaxSize(max_size=3584),
                 A.RandomScale(scale_limit=0.5, p=0.75),
-                A.PadIfNeeded(min_width=1600, min_height=1600, border_mode=0),
+                A.PadIfNeeded(min_width=1792, min_height=1792, border_mode=0),
                 A.RandomSizedBBoxSafeCrop_Modified(width=1600, height=1600, erosion_rate=0.2),
                 A.HorizontalFlip(p=0.5),
                 A.VerticalFlip(p=0.5),
