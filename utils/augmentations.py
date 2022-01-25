@@ -24,11 +24,12 @@ class Albumentations:
             self.transform = A.Compose([
                 A.LongestMaxSize(max_size=3584),
                 A.RandomScale(scale_limit=0.5, p=0.75),
+                A.Rotate(limit=90, p=0.75),
                 A.PadIfNeeded(min_width=1728, min_height=1728, border_mode=0),
                 A.RandomSizedBBoxSafeCrop_Modified(width=1728, height=1728, erosion_rate=0.2),
                 A.HorizontalFlip(p=0.5),
                 A.VerticalFlip(p=0.5),
-                A.RandomRotate90(p=0.5),
+                # A.RandomRotate90(p=0.5),
                 A.OneOf([
                 A.HueSaturationValue(hue_shift_limit=0.2, sat_shift_limit= 0.2, 
                                     val_shift_limit=0.2, p=0.9),
